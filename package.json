@@ -8,11 +8,18 @@
     "npm": "6.4.1"
   },
   "scripts": {
-    "start": "node index"
+    "start": "node index",
+    "backend": "nodemon index"
   },
   "author": "Ravi Yadav",
   "license": "ISC",
   "dependencies": {
+    "body-parser": "^1.18.3",
+    "dialogflow": "^0.7.0",
+    "dotenv": "^6.1.0",
     "express": "^4.16.4"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.6"
   }
 }
