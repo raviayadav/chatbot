@@ -8,6 +8,8 @@ const config = require('../config/keys');
 const structjson = require('./structjson');
 const WaveFile = require('wavefile');
 const projectID = config.googleProjectID;
+var ffmpeg = require('fluent-ffmpeg');
+var command = ffmpeg();
 
 const credentials = {
     client_email: config.googleClientEmail,
@@ -57,9 +59,20 @@ module.exports = {
     },
     audioQuery: async (filename) => {
         // console.log('reached here ********', filename);
-        await writeFile('./temp/myQuery.wav', Buffer.from(filename.replace('data:audio/wav;base64,', ''), 'base64'), 'base64');
-        const queryAudioFile = await readFile('./temp/myQuery.wav');
-        // console.log('queryAudioFile', queryAudioFile);
+        await writeFile('./temp/myQuery.wav', Buffer.from(filename.replace('data:audio/wav;base64,', ''), 'base64'));
+        await ffmpeg('./temp/myQuery.wav')
+        .audioBitrate('256k')
+        .audioChannels(1)
+        .audioFrequency(16000)
+        .on('end', function() {
+          console.log('file has been converted succesfully');
+        })
+        .on('error', function(err) {
+          console.log('an error happened: ' + err.message);
+        })
+        .save('./temp/final.wav');
+        const queryAudioFile = await readFile('./temp/final.wav');
+        console.log('queryAudioFile', queryAudioFile);
         const request = {
             session: sessionPath,
             queryInput: {
