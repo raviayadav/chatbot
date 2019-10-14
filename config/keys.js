@@ -6,5 +6,4 @@ module.exports = {
     googlePrivateKey: process.env.GOOGLE_PRIVATE_KEY,
     inputAudioEncoding: 'AUDIO_ENCODING_LINEAR_16',
     sampleRateHertz: 16000
-
   }
