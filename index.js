@@ -11,4 +11,4 @@ const PORT = process.env.PORT || 5000;
 app.use(bodyParser.json());
 require('./routes/dialogFlowRoutes')(app);
 
-app.listen(PORT);
+app.listen(PORT, () => console.log(`listening on port ${PORT}`));

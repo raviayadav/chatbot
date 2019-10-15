@@ -8,6 +8,8 @@ const config = require('../config/keys');
 const structjson = require('./structjson');
 const WaveFile = require('wavefile');
 const projectID = config.googleProjectID;
+const uuidv4 = require('uuid/v4');
+const dialogFlowSessionID = uuidv4();
 var ffmpeg = require('fluent-ffmpeg');
 var command = ffmpeg();
 
@@ -16,7 +18,7 @@ const credentials = {
     private_key: config.googlePrivateKey
 };
 const sessionClient = new dialogFlow.SessionsClient({projectID, credentials});
-const sessionPath = sessionClient.sessionPath(config.googleProjectID, config.dialogFlowSessionID);
+const sessionPath = sessionClient.sessionPath(config.googleProjectID, dialogFlowSessionID);
 const readFile = util.promisify(fs.readFile);
 const writeFile = util.promisify(fs.writeFile);
 module.exports = {
