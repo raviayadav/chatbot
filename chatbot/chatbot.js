@@ -3,15 +3,13 @@
 const fs = require('fs');
 const util = require('util');
 const dialogFlow = require('dialogflow');
-const path = require('path');
 const config = require('../config/keys');
 const structjson = require('./structjson');
-const WaveFile = require('wavefile');
 const projectID = config.googleProjectID;
 const uuidv4 = require('uuid/v4');
 const dialogFlowSessionID = uuidv4();
-var ffmpeg = require('fluent-ffmpeg');
-var command = ffmpeg();
+const ffmpeg = require('fluent-ffmpeg');
+
 
 const credentials = {
     client_email: config.googleClientEmail,
