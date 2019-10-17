@@ -8,7 +8,7 @@ const structjson = require('./structjson');
 const projectID = config.googleProjectID;
 const uuidv4 = require('uuid/v4');
 const dialogFlowSessionID = uuidv4();
-// const ffmpeg = require('fluent-ffmpeg');
+const path = require('path');// const ffmpeg = require('fluent-ffmpeg');
 
 
 const credentials = {
@@ -59,6 +59,12 @@ module.exports = {
           return responses;
     },
     audioQuery: async (filename) => {
+      console.log('reached inside audioQuery');
+      const temp_dir = path.join(process.cwd(), 'temp/');
+      // console.log('temp dir2', temp_dir);
+      if (!fs.existsSync(temp_dir)) {
+          fs.mkdirSync(temp_dir);
+      }
         // console.log('reached here ********', filename);
         const queryAudioFile = fs.readFileSync(`${__dirname}/../temp/final.wav`);
         // console.log('queryAudioFile', queryAudioFile);
@@ -75,10 +81,8 @@ module.exports = {
           };
         // console.log('request', request);
         let responses = await sessionClient.detectIntent(request);
-        setTimeout( () => {
-          fs.unlinkSync(`${__dirname}/../temp/myQuery.wav`);
-          fs.unlinkSync(`${__dirname}/../temp/final.wav`);  
-        }, 1000)
+        fs.unlinkSync(`${__dirname}/../temp/myQuery.wav`);
+        fs.unlinkSync(`${__dirname}/../temp/final.wav`);
         // console.log('response', responses);
         return responses;
     },

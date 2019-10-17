@@ -2,11 +2,18 @@ const chatbot = require('../chatbot/chatbot');
 const ffmpeg = require('fluent-ffmpeg');
 // const util = require('util');
 const fs = require('fs');
+const path = require('path');
+
 // const writeFile = util.promisify(fs.writeFile);
 async function middleWare(req, res, next) {
     const file = req.body.audio;
-    fs.writeFileSync(`${__dirname}/../temp/myQuery.wav`, Buffer.from(file.replace('data:audio/wav;base64,', ''), 'base64'));
-    ffmpeg(`${__dirname}/../temp/myQuery.wav`)
+    const temp_dir = path.join(process.cwd(), 'temp/');
+    // console.log('temp dir', temp_dir);
+    if (!fs.existsSync(temp_dir)) {
+        fs.mkdirSync(temp_dir);
+    }
+    fs.writeFileSync(`${temp_dir}myQuery.wav`, Buffer.from(file.replace('data:audio/wav;base64,', ''), 'base64'));
+    ffmpeg(`${temp_dir}myQuery.wav`)
     .audioBitrate('256k')
     .audioChannels(1)
     .audioFrequency(16000)
@@ -16,10 +23,10 @@ async function middleWare(req, res, next) {
     .on('error', function(err) {
        console.log('an error happened: ' + err.message);
      })
-    .save(`${__dirname}/../temp/final.wav`);
+    .save(`${temp_dir}final.wav`);
     setTimeout(() => {
         next();
-    }, 1000);
+    }, 500);
 }
 module.exports = app => {
     app.get('/', (req, res) => {
