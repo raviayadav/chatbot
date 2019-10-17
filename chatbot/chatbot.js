@@ -75,8 +75,10 @@ module.exports = {
           };
         // console.log('request', request);
         let responses = await sessionClient.detectIntent(request);
-        fs.unlinkSync(`${__dirname}/../temp/myQuery.wav`);
-        fs.unlinkSync(`${__dirname}/../temp/final.wav`);
+        setTimeout( () => {
+          fs.unlinkSync(`${__dirname}/../temp/myQuery.wav`);
+          fs.unlinkSync(`${__dirname}/../temp/final.wav`);  
+        }, 1000)
         // console.log('response', responses);
         return responses;
     },
