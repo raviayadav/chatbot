@@ -81,8 +81,8 @@ module.exports = {
           };
         // console.log('request', request);
         let responses = await sessionClient.detectIntent(request);
-        // fs.unlinkSync(`${temp_dir}myQuery.wav`);
-        // fs.unlinkSync(`${temp_dir}final.wav`);
+        fs.unlinkSync(`${temp_dir}myQuery.wav`);
+        fs.unlinkSync(`${temp_dir}final.wav`);
         console.log('response', responses);
         return responses;
     },

@@ -5,7 +5,7 @@ const fs = require('fs');
 const path = require('path');
 
 // const writeFile = util.promisify(fs.writeFile);
-async function middleWare(req, res, next) {
+function middleWare(req, res, next) {
     const file = req.body.audio;
     const temp_dir = path.join(process.cwd(), 'temp/');
     console.log('temp dir', temp_dir);
@@ -26,7 +26,7 @@ async function middleWare(req, res, next) {
     .save(`${temp_dir}final.wav`);
     setTimeout(() => {
         next();
-    }, 500);
+    }, 1500);
 }
 module.exports = app => {
     app.get('/', (req, res) => {
