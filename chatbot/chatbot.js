@@ -61,7 +61,7 @@ module.exports = {
     audioQuery: async (filename) => {
       console.log('reached inside audioQuery');
       const temp_dir = path.join(process.cwd(), 'temp/');
-      // console.log('temp dir2', temp_dir);
+      console.log('temp dir2', temp_dir);
       if (!fs.existsSync(temp_dir)) {
           fs.mkdirSync(temp_dir);
       }
@@ -81,9 +81,9 @@ module.exports = {
           };
         // console.log('request', request);
         let responses = await sessionClient.detectIntent(request);
-        fs.unlinkSync(`${temp_dir}myQuery.wav`);
-        fs.unlinkSync(`${temp_dir}final.wav`);
-        // console.log('response', responses);
+        // fs.unlinkSync(`${temp_dir}myQuery.wav`);
+        // fs.unlinkSync(`${temp_dir}final.wav`);
+        console.log('response', responses);
         return responses;
     },
     handleAction: (responses) => {

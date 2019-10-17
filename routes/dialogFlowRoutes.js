@@ -8,7 +8,7 @@ const path = require('path');
 async function middleWare(req, res, next) {
     const file = req.body.audio;
     const temp_dir = path.join(process.cwd(), 'temp/');
-    // console.log('temp dir', temp_dir);
+    console.log('temp dir', temp_dir);
     if (!fs.existsSync(temp_dir)) {
         fs.mkdirSync(temp_dir);
     }
