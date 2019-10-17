@@ -19,6 +19,7 @@ const sessionClient = new dialogFlow.SessionsClient({projectID, credentials});
 const sessionPath = sessionClient.sessionPath(config.googleProjectID, dialogFlowSessionID);
 const readFile = util.promisify(fs.readFile);
 const writeFile = util.promisify(fs.writeFile);
+console.log('DIRNAME', __dirname);
 module.exports = {
     textQuery: async (text, parameters = {}) => {
         let self = module.exports;
@@ -59,8 +60,8 @@ module.exports = {
     },
     audioQuery: async (filename) => {
         // console.log('reached here ********', filename);
-        await writeFile('./temp/myQuery.wav', Buffer.from(filename.replace('data:audio/wav;base64,', ''), 'base64'));
-        const queryAudioFile = await readFile('./temp/myQuery.wav');
+        await writeFile(`${__dirname}/../temp/myQuery.wav`, Buffer.from(filename.replace('data:audio/wav;base64,', ''), 'base64'));
+        const queryAudioFile = await readFile(`${__dirname}/../temp/myQuery.wav`);
         console.log('queryAudioFile', queryAudioFile);
         const request = {
             session: sessionPath,
