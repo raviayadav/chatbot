@@ -19,7 +19,7 @@ async function middleWare(req, res, next) {
     .save(`${__dirname}/../temp/final.wav`);
     setTimeout(() => {
         next();
-    }, 500);
+    }, 1000);
 }
 module.exports = app => {
     app.get('/', (req, res) => {
