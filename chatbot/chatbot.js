@@ -60,8 +60,8 @@ module.exports = {
     },
     audioQuery: async (filename) => {
         // console.log('reached here ********', filename);
-        await writeFile(`${__dirname}/../temp/myQuery.wav`, Buffer.from(filename.replace('data:audio/wav;base64,', ''), 'base64'));
-        const queryAudioFile = await readFile(`${__dirname}/../temp/myQuery.wav`);
+        await writeFile('/app/temp/myQuery.wav', Buffer.from(filename.replace('data:audio/wav;base64,', ''), 'base64'));
+        const queryAudioFile = await readFile('/app/temp/myQuery.wav');
         console.log('queryAudioFile', queryAudioFile);
         const request = {
             session: sessionPath,
