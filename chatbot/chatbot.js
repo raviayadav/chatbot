@@ -1,7 +1,7 @@
 "use strict"
 
 const fs = require('fs');
-const util = require('util');
+// const util = require('util');
 const dialogFlow = require('dialogflow');
 const config = require('../config/keys');
 const structjson = require('./structjson');
@@ -17,9 +17,9 @@ const credentials = {
 };
 const sessionClient = new dialogFlow.SessionsClient({projectID, credentials});
 const sessionPath = sessionClient.sessionPath(config.googleProjectID, dialogFlowSessionID);
-const readFile = util.promisify(fs.readFile);
-const writeFile = util.promisify(fs.writeFile);
-console.log('DIRNAME', __dirname);
+// const readFile = util.promisify(fs.readFile);
+// const writeFile = util.promisify(fs.writeFile);
+// console.log('DIRNAME', __dirname);
 module.exports = {
     textQuery: async (text, parameters = {}) => {
         let self = module.exports;
@@ -60,9 +60,8 @@ module.exports = {
     },
     audioQuery: async (filename) => {
         // console.log('reached here ********', filename);
-        await writeFile(`${__dirname}/../temp/myQuery.wav`, Buffer.from(filename.replace('data:audio/wav;base64,', ''), 'base64'));
-        const queryAudioFile = await readFile(`${__dirname}/../temp/myQuery.wav`);
-        console.log('queryAudioFile', queryAudioFile);
+        const queryAudioFile = fs.readFileSync(`${__dirname}/../temp/final.wav`);
+        // console.log('queryAudioFile', queryAudioFile);
         const request = {
             session: sessionPath,
             queryInput: {
@@ -76,7 +75,9 @@ module.exports = {
           };
         // console.log('request', request);
         let responses = await sessionClient.detectIntent(request);
-        console.log('response', responses);
+        fs.unlinkSync(`${__dirname}/../temp/myQuery.wav`);
+        fs.unlinkSync(`${__dirname}/../temp/final.wav`);
+        // console.log('response', responses);
         return responses;
     },
     handleAction: (responses) => {
