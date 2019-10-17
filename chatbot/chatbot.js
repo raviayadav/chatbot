@@ -8,7 +8,7 @@ const structjson = require('./structjson');
 const projectID = config.googleProjectID;
 const uuidv4 = require('uuid/v4');
 const dialogFlowSessionID = uuidv4();
-const ffmpeg = require('fluent-ffmpeg');
+// const ffmpeg = require('fluent-ffmpeg');
 
 
 const credentials = {
@@ -60,18 +60,7 @@ module.exports = {
     audioQuery: async (filename) => {
         // console.log('reached here ********', filename);
         await writeFile('./temp/myQuery.wav', Buffer.from(filename.replace('data:audio/wav;base64,', ''), 'base64'));
-        await ffmpeg('./temp/myQuery.wav')
-        .audioBitrate('256k')
-        .audioChannels(1)
-        .audioFrequency(16000)
-        .on('end', function() {
-          console.log('file has been converted succesfully');
-        })
-        .on('error', function(err) {
-          console.log('an error happened: ' + err.message);
-        })
-        .save('./temp/final.wav');
-        const queryAudioFile = await readFile('./temp/final.wav');
+        const queryAudioFile = await readFile('./temp/myQuery.wav');
         console.log('queryAudioFile', queryAudioFile);
         const request = {
             session: sessionPath,
