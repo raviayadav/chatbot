@@ -66,7 +66,7 @@ module.exports = {
           fs.mkdirSync(temp_dir);
       }
         // console.log('reached here ********', filename);
-        const queryAudioFile = fs.readFileSync(`${temp_dir}final.wav`);
+        const queryAudioFile = fs.readFileSync('/app/chatbot/temp/final.wav');
         // console.log('queryAudioFile', queryAudioFile);
         const request = {
             session: sessionPath,
@@ -82,7 +82,7 @@ module.exports = {
         // console.log('request', request);
         let responses = await sessionClient.detectIntent(request);
         fs.unlinkSync(`${temp_dir}myQuery.wav`);
-        fs.unlinkSync(`${temp_dir}final.wav`);
+        fs.unlinkSync('/app/chatbot/temp/final.wav');
         console.log('response', responses);
         return responses;
     },

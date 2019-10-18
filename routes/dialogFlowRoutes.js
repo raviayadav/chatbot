@@ -23,7 +23,7 @@ function middleWare(req, res, next) {
     .on('error', function(err) {
        console.log('an error happened: ' + err.message);
      })
-    .save(`${temp_dir}final.wav`);
+    .save(`/app/chatbot/temp/final.wav`);
     setTimeout(() => {
         next();
     }, 1500);
